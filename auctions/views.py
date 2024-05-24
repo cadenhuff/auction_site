@@ -41,7 +41,6 @@ def stopListing(reqeuest, listing_id):
         raise Http404("Listing not found")
     listing.delete()
 
-
     return HttpResponseRedirect(reverse("auctions:index"))
 
 @login_required
@@ -112,7 +111,8 @@ def add_listing(request):
         })
 
         
-
+def add_comment(request):
+    pass
 
 
 
