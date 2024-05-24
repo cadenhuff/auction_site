@@ -5,8 +5,8 @@ from django.http import Http404, HttpResponse, HttpResponseBadRequest, HttpRespo
 from django.shortcuts import render
 from django.urls import reverse
 from django.db.models import Max
-from .models import User, Listing, Bid
-from .forms import BidForm, ListingForm
+from .models import User, Listing, Bid, Comment
+from .forms import BidForm, ListingForm, CommentForm
 
 def index(request):
     return render(request, "auctions/index.html",{
@@ -17,9 +17,11 @@ def listing(request, listing_id):
     try:
         listing = Listing.objects.get(id=listing_id)
         form = BidForm()
+        commentForm = CommentForm()
     except Listing.DoesNotExist:
         raise Http404("Listing not found.")
     bid = Bid.objects.filter(listing=listing).aggregate(Max('value'))['value__max']
+    comments = Comment.objects.filter(listing = listing)
     if (bid == None):
         bid = 0
     if (request.user == listing.user):
@@ -31,6 +33,8 @@ def listing(request, listing_id):
         "bid": bid,
         "form": form,
         "isUser": isUser,
+        "commentForm": commentForm,
+        "comments": comments
         
     })
 
@@ -110,9 +114,16 @@ def add_listing(request):
             "new_listing_form": new_listing_form,
         })
 
-        
-def add_comment(request):
-    pass
+@login_required       
+def comment(request, listing_id):
+    if request.method == "POST":
+        new_comment = Comment.objects.create(user = request.user, listing = Listing.objects.get(pk = listing_id),
+                                             comment = request.POST["comment"])
+        # to get listing, could also set a related name in comment i think, this would be better if I didnt want to have to
+        # pass listing_id, but its fine for now
+        new_comment.save()
+
+        return HttpResponseRedirect(reverse("auctions:listing", args=(listing_id,)))
 
 
 

@@ -11,20 +11,38 @@
         <p>{{listing.open}}</p>
         <p>{{bid}}</p>
     {% endif %}
+    {% if user.is_authenticated %}
+        {% if isUser%}
+            <form action = "{% url 'auctions:stopListing' listing.id %}" method = "POST">
+                {% csrf_token %}
+                <button type = "submit">Stop Listing</button>
+            </form> 
+        {% endif %}
 
-    {% if isUser%}
-        <form action = "{% url 'auctions:stopListing' listing.id %}" method = "POST">
+    
+
+        <form  action="{% url 'auctions:bid' listing.id %}" method = "POST">
             {% csrf_token %}
-            <button type = "submit">Stop Listing</button>
-        </form> 
+            {{ form.as_p }}
+            <button type="submit">Place Bid</button>
+        </form>
+        <form action="{%url 'auctions:comment' listing.id %}" method = "POST">
+            {% csrf_token %}
+            {{commentForm}}
+            <button type = "submit"> Comment</button>
+
+        </form>
 
     {%endif%}
+    {%for comment in comments%}
+        {{comment.date}}
+        <br>
+        {{comment.comment}}
+        {%empty%}
+            <p>no comments</p>
 
-    <form  action="{% url 'auctions:bid' listing.id %}" method = "POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Place Bid</button>
-    </form>
+    {%endfor%}
+    
     
 
 {% endblock %}

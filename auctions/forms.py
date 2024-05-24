@@ -1,6 +1,6 @@
 
 from django import forms
-from .models import Listing
+from .models import Listing, Comment
 from django.forms import ModelForm
 
 class BidForm(forms.Form):
@@ -16,3 +16,10 @@ class ListingForm(ModelForm):
     class Meta:
         model = Listing
         fields= ["title", "description", "image"]
+
+
+class CommentForm(ModelForm):
+    class Meta:
+        model = Comment
+        fields = ["comment"]
+        
