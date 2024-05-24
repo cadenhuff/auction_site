@@ -1,0 +1,30 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+
+
+    {% if listing.open %}
+        <h1>{{listing.title}}</h1>
+        <h1>{{listing.id}}</h1>
+        <p>{{listing.description}}</p>
+        <p>{{listing.open}}</p>
+        <p>{{bid}}</p>
+    {% endif %}
+
+    {% if isUser%}
+        <form action = "{% url 'auctions:stopListing' listing.id %}" method = "POST">
+            {% csrf_token %}
+            <button type = "submit">Stop Listing</button>
+        </form> 
+
+    {%endif%}
+
+    <form  action="{% url 'auctions:bid' listing.id %}" method = "POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Place Bid</button>
+    </form>
+    
+
+{% endblock %}

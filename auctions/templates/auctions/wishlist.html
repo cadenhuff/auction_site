@@ -1,0 +1,15 @@
+{% extends "auctions\layout.html"%}
+
+{%block body%}
+
+{% for wish in wishes %}
+
+
+
+{{wish.title}}
+{% empty %}
+<p>No wishes</p>
+
+{%endfor%}
+
+{%endblock%}
