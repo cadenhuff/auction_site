@@ -1,3 +1,12 @@
 body {
     padding: 10px;
 }
+
+.listing_button{
+    border: solid;
+}
+
+p{
+    color: green;
+}
+
