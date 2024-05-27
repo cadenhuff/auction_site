@@ -12,14 +12,35 @@ def index(request):
     return render(request, "auctions/index.html",{
         "listings": Listing.objects.all(),
     })
+def category(request, category):
+    
+    
+    listings = Listing.objects.filter(category = category)
+    
+    for category_code, category_name in Listing.SHOPPING_CATEGORIES:
+        if category_code == category:
+            category = category_name
+
+
+    return render(request, "auctions/category.html",{
+        "category": category, 
+        "listings": listings,
+
+    })
+
 
 def listing(request, listing_id):
+    return render(request, "auctions/listing_page.html")
+#def listing(request, listing_id):
+
     try:
         listing = Listing.objects.get(id=listing_id)
+        print(listing.title)
         form = BidForm()
         commentForm = CommentForm()
     except Listing.DoesNotExist:
         raise Http404("Listing not found.")
+    print('penis')
     bid = Bid.objects.filter(listing=listing).aggregate(Max('value'))['value__max']
     comments = Comment.objects.filter(listing = listing)
     if (bid == None):

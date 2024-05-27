@@ -21,6 +21,21 @@
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'auctions:index' %}">Active Listings</a>
             </li>
+            <div class = "dropdown">
+            <li class = "nav-item">
+                <p id = "categories_button" class = "nav-link">Categories</p>
+                <div class = "dropdown-content">
+                    <!-- Defintely a way to loop through all the categories without having to explicity state them-->
+                    <a href="{% url 'auctions:category' 'HOM'%}">Home</a>
+                    <br>
+                    <a href="{% url 'auctions:category' 'CLO'%}">Clothes</a>
+                    <br>
+                    <a href="{% url 'auctions:category' 'TOY'%}">Toys</a>
+                    <br>
+                    <a href="{% url 'auctions:category' 'MIS'%}">Miscellaneous</a>
+                </div>
+            </li>
+            </div>
             {% if user.is_authenticated %}
                 <li class = "nav-item">
                     <a class = "nav-link" href="{% url 'auctions:wishlist' %}">My Wishlist</a>

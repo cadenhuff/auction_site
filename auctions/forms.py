@@ -15,7 +15,7 @@ class BidForm(forms.Form):
 class ListingForm(ModelForm):
     class Meta:
         model = Listing
-        fields= ["title", "description", "image"]
+        fields= ["title", "description", "image", "category"]
 
 
 class CommentForm(ModelForm):

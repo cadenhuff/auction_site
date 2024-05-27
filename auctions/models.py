@@ -13,6 +13,16 @@ class Listing(models.Model):
     description = models.TextField()
     image = models.URLField(blank = True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    SHOPPING_CATEGORIES = [
+        ("CLO", "Clothing"),
+        ("HOM","Home"),
+        ("TOY", "Toys"),
+        ("MIS", "Miscellaneous")
+    ]
+
+
+    category = models.CharField(choices=SHOPPING_CATEGORIES, max_length=3, default="MIS")
     current_bid = models.DecimalField(max_digits=11, decimal_places=2, default=0.0)
     open = models.BooleanField(default=True)
     Wishers = models.ManyToManyField(User, related_name="wishes")

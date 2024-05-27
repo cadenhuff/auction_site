@@ -1,21 +1,23 @@
 {% extends "auctions/layout.html" %}
-{% load static %}
 
 {% block body %}
-    <h2 class = "page_header">Active Listings</h2>
-    {% for listing in listings %}
 
+
+    <h1>{{category}}</h1>
+
+
+    {% for listing in listings %}
         <div class = "listing_button">
             <a href="{% url 'auctions:listing' listing.id %}">
-                <h2>{{listing.title}}</h2>
+                <h2 id = "dez">{{listing.title}}</h2>
                 <p>{{listing.description}}</p>
                 {% if listing.image is not None%}
                     <img src="{{listing.image}}" width="500px">
                 {%endif%}
             </a>
         </div>
-        
-        
-    {%endfor%}
-    
-{% endblock %} 
+
+    {% endfor %}
+
+
+{% endblock %}
