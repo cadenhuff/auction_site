@@ -29,9 +29,8 @@ def category(request, category):
     })
 
 
+
 def listing(request, listing_id):
-    return render(request, "auctions/listing_page.html")
-#def listing(request, listing_id):
 
     try:
         listing = Listing.objects.get(id=listing_id)
